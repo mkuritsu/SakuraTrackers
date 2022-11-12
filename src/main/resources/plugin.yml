@@ -1,0 +1,15 @@
+name: SakuraTrackers
+version: '${project.version}'
+main: io.github.itstaylz.sakuratrackers.SakuraTrackersPlugin
+api-version: 1.18
+authors: [ itsTaylz ]
+depend: [Hexlib]
+commands:
+
+  givetracker:
+    permission: sakuratrackers.give
+    permission-message: §cNo permission
+
+  trackersmenu:
+    permission: sakuratrackers.menu
+    permission-message: §cNo permission
