@@ -1,7 +1,7 @@
 package io.github.itstaylz.sakuratrackers.trackers;
 
 import io.github.itstaylz.hexlib.items.ItemBuilder;
-import io.github.itstaylz.hexlib.utils.ItemUtils;
+import io.github.itstaylz.hexlib.utils.PDCUtils;
 import io.github.itstaylz.sakuratrackers.SakuraTrackersPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Statistic;
@@ -48,18 +48,18 @@ public class TrackerManager {
     }
 
     public static Tracker getTrackerFromTrackerItem(ItemStack item) {
-        String id = ItemUtils.getPDCValue(item, TRACKER_ITEM_KEY, PersistentDataType.STRING);
+        String id = PDCUtils.getPDCValue(item, TRACKER_ITEM_KEY, PersistentDataType.STRING);
         return id != null ? TRACKER_ID_REGISTRY.get(id) : null;
     }
 
     public static boolean itemHasTrackerApplied(ItemStack item, Tracker tracker) {
         NamespacedKey key = new NamespacedKey(PLUGIN, tracker.id());
-        return ItemUtils.hasPDCValue(item, key, PersistentDataType.FLOAT);
+        return PDCUtils.hasPDCValue(item, key, PersistentDataType.FLOAT);
     }
 
     public static void applyTrackerToItem(ItemStack item, Tracker tracker) {
         NamespacedKey key = new NamespacedKey(PLUGIN, tracker.id());
-        ItemUtils.setPDCValue(item, key, PersistentDataType.FLOAT, 0f);
+        PDCUtils.setPDCValue(item, key, PersistentDataType.FLOAT, 0f);
         new ItemBuilder(item)
                 .addLore(tracker.itemLore() + " " + 0)
                 .build();
@@ -76,7 +76,7 @@ public class TrackerManager {
             for (Tracker tracker : TRACKER_ID_REGISTRY.values()) {
                 NamespacedKey key = new NamespacedKey(PLUGIN, tracker.id());
                 if (lore.get(i).contains(tracker.itemLore())) {
-                    Float value = ItemUtils.getPDCValue(item, key, PersistentDataType.FLOAT);
+                    Float value = PDCUtils.getPDCValue(item, key, PersistentDataType.FLOAT);
                     String valueFormatted;
                     if (tracker == Trackers.BLOCKS_FLOWN || tracker == Trackers.BLOCKS_WALKED)
                         valueFormatted = String.format("%.2f", value);

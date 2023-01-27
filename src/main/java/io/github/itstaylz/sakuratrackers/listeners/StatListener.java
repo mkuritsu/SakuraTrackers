@@ -1,6 +1,6 @@
 package io.github.itstaylz.sakuratrackers.listeners;
 
-import io.github.itstaylz.hexlib.utils.ItemUtils;
+import io.github.itstaylz.hexlib.utils.PDCUtils;
 import io.github.itstaylz.sakuratrackers.SakuraTrackersPlugin;
 import io.github.itstaylz.sakuratrackers.trackers.Tracker;
 import io.github.itstaylz.sakuratrackers.trackers.TrackerManager;
@@ -72,10 +72,10 @@ public class StatListener implements Listener {
 
     private void changeTracker(ItemStack item, Tracker tracker, float amount) {
         NamespacedKey key = new NamespacedKey(this.plugin, tracker.id());
-        Float current = ItemUtils.getPDCValue(item, key, PersistentDataType.FLOAT);
+        Float current = PDCUtils.getPDCValue(item, key, PersistentDataType.FLOAT);
         if (current != null) {
             current += amount;
-            ItemUtils.setPDCValue(item, key, PersistentDataType.FLOAT, current);
+            PDCUtils.setPDCValue(item, key, PersistentDataType.FLOAT, current);
             TrackerManager.refreshItemLore(item);
         }
     }

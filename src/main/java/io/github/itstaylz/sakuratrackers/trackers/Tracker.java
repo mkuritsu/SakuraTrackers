@@ -1,7 +1,7 @@
 package io.github.itstaylz.sakuratrackers.trackers;
 
 import io.github.itstaylz.hexlib.items.ItemBuilder;
-import io.github.itstaylz.hexlib.utils.ItemUtils;
+import io.github.itstaylz.hexlib.utils.PDCUtils;
 import io.github.itstaylz.hexlib.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,7 +17,7 @@ public record Tracker(String id, TrackerType type, String displayName, List<Stri
     public ItemStack getTrackerItem() {
         ItemStack item = new ItemBuilder(Material.COMPASS)
                 .setDisplayName(this.displayName)
-                .addEnchant(Enchantment.DURABILITY, 1)
+                .addEnchantment(Enchantment.DURABILITY, 1)
                 .addItemFlags(ItemFlag.HIDE_ENCHANTS)
                 .setLore(
                         StringUtils.colorize("&7" + getTypeName() + " Tracker"),
@@ -28,8 +28,8 @@ public record Tracker(String id, TrackerType type, String displayName, List<Stri
                         StringUtils.colorize("&7Drag n' Drop to apply to item!")
                         )
                 .build();
-        ItemUtils.setPDCValue(item, TrackerManager.TRACKER_ITEM_KEY, PersistentDataType.STRING, this.id);
-        ItemUtils.setPDCValue(item, TrackerManager.UNSTACKABLE_KEY, PersistentDataType.STRING, UUID.randomUUID().toString());
+        PDCUtils.setPDCValue(item, TrackerManager.TRACKER_ITEM_KEY, PersistentDataType.STRING, this.id);
+        PDCUtils.setPDCValue(item, TrackerManager.UNSTACKABLE_KEY, PersistentDataType.STRING, UUID.randomUUID().toString());
         return item;
     }
 
