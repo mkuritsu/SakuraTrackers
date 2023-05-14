@@ -13,3 +13,7 @@ commands:
   trackersmenu:
     permission: sakuratrackers.menu
     permission-message: §cNo permission
+
+  trackersreload:
+    permission: sakuratrackers.reload
+    permission-message: §cNo permission

@@ -1,5 +1,6 @@
 package io.github.itstaylz.sakuratrackers.listeners;
 
+import io.github.itstaylz.hexlib.storage.file.YamlFile;
 import io.github.itstaylz.hexlib.utils.StringUtils;
 import io.github.itstaylz.sakuratrackers.trackers.Tracker;
 import io.github.itstaylz.sakuratrackers.trackers.TrackerManager;
@@ -12,8 +13,26 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public class InventoryListener implements Listener {
+
+    private String trackerAddedMessage, trackerAlreadyEquippedMessage, trackerInvalidItemMessage;
+    private YamlFile messagesFile;
+
+    public InventoryListener(JavaPlugin plugin) {
+        plugin.saveDefaultConfig();
+        this.messagesFile = new YamlFile(new File(plugin.getDataFolder(), "config.yml"));
+        reloadMessages();
+    }
+
+    public void reloadMessages() {
+        this.trackerAddedMessage = messagesFile.getConfig().getString("tracker_add_message");
+        this.trackerAlreadyEquippedMessage = messagesFile.getConfig().getString("tracker_already_equipped_message");
+        this.trackerInvalidItemMessage = messagesFile.getConfig().getString("tracker_invalid_item_message");
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     private void onClick(InventoryClickEvent event) {
@@ -29,13 +48,13 @@ public class InventoryListener implements Listener {
                             player.setItemOnCursor(null);
                             TrackerManager.applyTrackerToItem(clicked, tracker);
                             player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(StringUtils.colorize("&7&l[&d&lSakura&b&lMC&7&l] &aTracker added successfully!"));
+                            player.sendMessage(StringUtils.colorize(this.trackerAddedMessage));
                         } else {
-                            player.sendMessage(StringUtils.colorize("&7&l[&d&lSakura&b&lMC&7&l] &cThis item already has this tracker equipped!"));
+                            player.sendMessage(StringUtils.colorize(this.trackerAlreadyEquippedMessage));
                             player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                         }
                     } else {
-                        player.sendMessage(StringUtils.colorize("&7&l[&d&lSakura&b&lMC&7&l] &cThis tracker can't be applied to this item."));
+                        player.sendMessage(StringUtils.colorize(this.trackerInvalidItemMessage));
                         player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                     }
                 }

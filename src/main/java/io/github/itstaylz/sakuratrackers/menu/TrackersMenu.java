@@ -18,7 +18,7 @@ public class TrackersMenu extends Menu {
 
     private static final MenuSettings SETTINGS = MenuSettings.builder()
             .withNumberOfRows(5)
-            .withTitle(StringUtils.colorize("&9RUNES &7- &cAdmin Menu"))
+            .withTitle(StringUtils.colorize("&9TRACKERS &7- &cAdmin Menu"))
             .build();
 
     private static final ItemStack BACK_ARROW = new ItemBuilder(Material.ARROW)
